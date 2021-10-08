@@ -84,7 +84,6 @@ public class PostsApiControllerTest {
 
         HttpEntity<PostsUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
 
-
         // when
         ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Long.class);
 
@@ -95,5 +94,29 @@ public class PostsApiControllerTest {
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
         assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
+    }
+
+    @Test
+    public void 게시글_삭제() {
+        // given
+        Posts posts = postsRepository.save(Posts.builder()
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
+
+        Long id = posts.getId();
+        String url = "http://localhost:"+port+"/api/v1/posts/"+id;
+
+//        HttpEntity<Long> requestEntity = new HttpEntity<>(id);
+
+        // when
+//        ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Long.class);
+        restTemplate.delete(url);
+
+        // then
+//        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+//        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+        assertThat(postsRepository.findAll()).isEmpty();
     }
 }
