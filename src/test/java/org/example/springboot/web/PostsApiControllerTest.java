@@ -1,6 +1,5 @@
 package org.example.springboot.web;
 
-import javafx.geometry.Pos;
 import org.example.springboot.domain.posts.Posts;
 import org.example.springboot.domain.posts.PostsRepository;
 import org.example.springboot.web.dto.PostsSaveRequestDto;
